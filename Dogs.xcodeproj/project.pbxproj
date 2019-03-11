@@ -9,12 +9,14 @@
 /* Begin PBXBuildFile section */
 		CBE3CF3A8B13E44607A99771 /* Pods_Dogs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D809ECEC9A2739BF5909DFD7 /* Pods_Dogs.framework */; };
 		D98A51562235A940008FABE3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98A51552235A940008FABE3 /* AppDelegate.swift */; };
-		D98A51582235A940008FABE3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98A51572235A940008FABE3 /* ViewController.swift */; };
+		D98A51582235A940008FABE3 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98A51572235A940008FABE3 /* ImageViewController.swift */; };
 		D98A515B2235A940008FABE3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D98A51592235A940008FABE3 /* Main.storyboard */; };
 		D98A515D2235A941008FABE3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D98A515C2235A941008FABE3 /* Assets.xcassets */; };
 		D98A51602235A941008FABE3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D98A515E2235A941008FABE3 /* LaunchScreen.storyboard */; };
 		D98A51682235AD05008FABE3 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98A51672235AD05008FABE3 /* APIManager.swift */; };
 		D98A517322361137008FABE3 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98A517222361137008FABE3 /* ActivityIndicator.swift */; };
+		D98A517722365131008FABE3 /* BreedListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98A517622365131008FABE3 /* BreedListViewController.swift */; };
+		D98A5179223664C9008FABE3 /* UIViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98A5178223664C9008FABE3 /* UIViewController+Rx.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,13 +25,15 @@
 		D809ECEC9A2739BF5909DFD7 /* Pods_Dogs.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dogs.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D98A51522235A940008FABE3 /* Dogs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dogs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D98A51552235A940008FABE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D98A51572235A940008FABE3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D98A51572235A940008FABE3 /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		D98A515A2235A940008FABE3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D98A515C2235A941008FABE3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D98A515F2235A941008FABE3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D98A51612235A941008FABE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D98A51672235AD05008FABE3 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		D98A517222361137008FABE3 /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
+		D98A517622365131008FABE3 /* BreedListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreedListViewController.swift; sourceTree = "<group>"; };
+		D98A5178223664C9008FABE3 /* UIViewController+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,9 +79,11 @@
 			isa = PBXGroup;
 			children = (
 				D98A51592235A940008FABE3 /* Main.storyboard */,
-				D98A51572235A940008FABE3 /* ViewController.swift */,
+				D98A517622365131008FABE3 /* BreedListViewController.swift */,
+				D98A51572235A940008FABE3 /* ImageViewController.swift */,
 				D98A51672235AD05008FABE3 /* APIManager.swift */,
 				D98A517222361137008FABE3 /* ActivityIndicator.swift */,
+				D98A5178223664C9008FABE3 /* UIViewController+Rx.swift */,
 				D98A51692235AE9C008FABE3 /* Supporting files */,
 			);
 			path = Dogs;
@@ -202,7 +208,9 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Dogs/Pods-Dogs-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
 				"${BUILT_PRODUCTS_DIR}/RxOptional/RxOptional.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 			);
@@ -210,7 +218,9 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxOptional.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 			);
@@ -228,7 +238,9 @@
 			files = (
 				D98A517322361137008FABE3 /* ActivityIndicator.swift in Sources */,
 				D98A51682235AD05008FABE3 /* APIManager.swift in Sources */,
-				D98A51582235A940008FABE3 /* ViewController.swift in Sources */,
+				D98A51582235A940008FABE3 /* ImageViewController.swift in Sources */,
+				D98A517722365131008FABE3 /* BreedListViewController.swift in Sources */,
+				D98A5179223664C9008FABE3 /* UIViewController+Rx.swift in Sources */,
 				D98A51562235A940008FABE3 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

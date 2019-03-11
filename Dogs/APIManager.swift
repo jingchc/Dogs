@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 
+
 class APIManager {
     
     static let share = APIManager()
@@ -16,50 +17,130 @@ class APIManager {
     private let host = "https://dog.ceo/api"
     private let session = URLSession.shared
     
+    // API - get main breeds
+    func getMainBreeds() -> Observable<[String]> {
+        // get url
+        guard let url = getURL(endPoint: .getMainBreeds) else {
+            return Observable.empty()
+        }
+        
+        return Observable.create { [weak session] observer in
+            
+            // create task
+            let task = session?.dataTask(with: url) { [weak self] (data, response, error) in
+                // parse result
+                guard let d = data, error == nil,
+                    let breeds = self?.parseData(data: d) as? [String] else {
+                        observer.onNext([])
+                        observer.onCompleted()
+                        return
+                }
+                observer.onNext(breeds)
+                observer.onCompleted()
+            }
+            task?.resume()
+            
+            
+            return Disposables.create()
+        }
+    }
+    
+    // API - get random image url by breed
+    func getRandomImage(by breed: String) -> Observable<URL?> {
+        
+        // get url
+        guard let url = getURL(endPoint: .getImage(breed: breed, count: 1)) else {
+            return Observable.just(nil)
+        }
+        
+        return Observable.create { [weak session] observer in
+            // create task
+            let task = session?.dataTask(with: url) { [weak self] (data, response, error) in
+                // parse result
+                guard let d = data, error == nil,
+                    let imageUrl = self?.parseData(data: d) as? String else {
+                        observer.onNext(nil)
+                        observer.onCompleted()
+                        return
+                }
+                observer.onNext(URL(string: imageUrl))
+                observer.onCompleted()
+            }
+            task?.resume()
+            
+            return Disposables.create()
+        }
+    }
+    
     // API - get random image url
-    func getRandomImage(count: Int, completion: @escaping(_ url: URL?) -> Void) {
+    func getRandomImage(count: Int) -> Observable<URL?> {
         
         // get url
         guard let url = getURL(endPoint: .getRandomImage(count: count)) else {
-            completion(nil)
-            return
+            return Observable.just(nil)
         }
         
-        // create task
-        let task = session.dataTask(with: url) { (data, response, error) in
-            // parse result
-            guard let d = data, error == nil,
-                let object = try? JSONSerialization.jsonObject(with: d, options: .allowFragments),
-                let dic = object as? [String: String], dic["status"] == "success",
-                let imageUrl = dic["message"] else {
-                    completion(nil)
+        return Observable.create { [weak session] observer in
+            // create task
+            let task = session?.dataTask(with: url) { [weak self] (data, response, error) in
+                // parse result
+                guard let d = data, error == nil,
+                    let imageUrl = self?.parseData(data: d) as? String else {
+                    observer.onNext(nil)
+                    observer.onCompleted()
                     return
+                }
+                observer.onNext(URL(string: imageUrl))
+                observer.onCompleted()
             }
-            completion(URL(string: imageUrl))
+            task?.resume()
+            
+            return Disposables.create()
         }
-        task.resume()
     }
     
-    
-    // download image
-    func downlaodImage(of url: URL, completion: @escaping(_ image: UIImage?) -> Void) {
-        // create task
-        let task = session.dataTask(with: url) { (data, response, error) in
-            // parse result
-            guard let d = data, error == nil else {
-                    completion(nil)
+    // API - download image
+    func downlaodImage(of url: URL) -> Observable<UIImage?> {
+        
+        return Observable.create { [weak session] observer in
+            // create task
+            let task = session?.dataTask(with: url) { (data, response, error) in
+                // parse result
+                guard let d = data, error == nil else {
+                    observer.onNext(nil)
+                    observer.onCompleted()
                     return
+                }
+                observer.onNext(UIImage(data: d))
+                observer.onCompleted()
             }
-            completion(UIImage(data: d))
+            task?.resume()
+            
+            return Disposables.create()
         }
-        task.resume()
+        
     }
     
 
 }
 
+// Tool
+extension APIManager {
+    
+    private func parseData(data: Data) -> AnyObject? {
+        
+        guard let object = try? JSONSerialization.jsonObject(with: data, options: .allowFragments),
+            let dic = object as? [String: AnyObject], (dic["status"] as? String) == "success",
+            let objects = dic["message"] else {
+                return nil
+        }
+        return objects
+    }
+    
+}
 
 
+// Path
 extension APIManager {
     
     private enum Endpoint {

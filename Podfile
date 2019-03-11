@@ -9,5 +9,6 @@ target 'Dogs' do
   pod 'RxSwift'
   pod 'RxCocoa'
   pod 'RxOptional'
+  pod 'RxDataSources'
 
 end
