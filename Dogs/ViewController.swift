@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+import RxOptional
 
 class ViewController: UIViewController {
 
@@ -14,6 +17,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var change: UIButton!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
+    private let bag = DisposeBag()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,27 +27,24 @@ class ViewController: UIViewController {
         // UI setting
         loadingIndicator.hidesWhenStopped = true
         dogImage.contentMode = .scaleAspectFit
-        
+
+        let activeIndicator = ActivityIndicator()
+
+
         // API
-        change.addTarget(self, action: #selector(changeImage), for: .touchUpInside)
+        change.rx.tap
+            .flatMapLatest { APIManager.share.getRandomImage(count: 1).trackActivity(activeIndicator) }
+            .filterNil()
+            .flatMapLatest { APIManager.share.downlaodImage(of: $0).trackActivity(activeIndicator) }
+            .bind(to: dogImage.rx.image)
+            .disposed(by: bag)
+        
+        activeIndicator.asObservable()
+            .bind(to: loadingIndicator.rx.isAnimating)
+            .disposed(by: bag)
         
     }
     
-    @objc private func changeImage() {
-        loadingIndicator.startAnimating()
-        APIManager.share.getRandomImage(count: 1) { [weak self] url in
-            guard let imageURL = url else {
-                // todo: error handling
-                return
-            }
-            APIManager.share.downlaodImage(of: imageURL) { image in
-                DispatchQueue.main.async {
-                    self?.loadingIndicator.stopAnimating()
-                    self?.dogImage?.image = image
-                }
-            }
-        }
-    }
 
 }
 

@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 
+
 class APIManager {
     
     static let share = APIManager()
@@ -17,42 +18,55 @@ class APIManager {
     private let session = URLSession.shared
     
     // API - get random image url
-    func getRandomImage(count: Int, completion: @escaping(_ url: URL?) -> Void) {
-        
+    func getRandomImage(count: Int) -> Observable<URL?> {
+
         // get url
         guard let url = getURL(endPoint: .getRandomImage(count: count)) else {
-            completion(nil)
-            return
+            return Observable.just(nil)
         }
         
-        // create task
-        let task = session.dataTask(with: url) { (data, response, error) in
-            // parse result
-            guard let d = data, error == nil,
-                let object = try? JSONSerialization.jsonObject(with: d, options: .allowFragments),
-                let dic = object as? [String: String], dic["status"] == "success",
-                let imageUrl = dic["message"] else {
-                    completion(nil)
-                    return
+        return Observable.create { [weak session] observer in
+            // create task
+            let task = session?.dataTask(with: url) { (data, response, error) in
+                // parse result
+                guard let d = data, error == nil,
+                    let object = try? JSONSerialization.jsonObject(with: d, options: .allowFragments),
+                    let dic = object as? [String: String], dic["status"] == "success",
+                    let imageUrl = dic["message"] else {
+                        observer.onNext(nil)
+                        observer.onCompleted()
+                        return
+                }
+                observer.onNext(URL(string: imageUrl))
+                observer.onCompleted()
             }
-            completion(URL(string: imageUrl))
+            task?.resume()
+            
+            return Disposables.create()
         }
-        task.resume()
     }
     
     
     // download image
-    func downlaodImage(of url: URL, completion: @escaping(_ image: UIImage?) -> Void) {
-        // create task
-        let task = session.dataTask(with: url) { (data, response, error) in
-            // parse result
-            guard let d = data, error == nil else {
-                    completion(nil)
+    func downlaodImage(of url: URL) -> Observable<UIImage?> {
+        
+        return Observable.create { [weak session] observer in
+            // create task
+            let task = session?.dataTask(with: url) { (data, response, error) in
+                // parse result
+                guard let d = data, error == nil else {
+                    observer.onNext(nil)
+                    observer.onCompleted()
                     return
+                }
+                observer.onNext(UIImage(data: d))
+                observer.onCompleted()
             }
-            completion(UIImage(data: d))
+            task?.resume()
+            
+            return Disposables.create()
         }
-        task.resume()
+        
     }
     
 
