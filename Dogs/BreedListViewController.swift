@@ -64,7 +64,7 @@ extension BreedListViewController: UITableViewDataSource, UITableViewDelegate {
         
         // 1. use segue
 //        performSegue(withIdentifier: "showImage", sender: breeds[indexPath.row])
-        // 2. init VC here
+        // 2. init VC here 
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ImageViewController") as! ImageViewController
         vc.breed = breeds[indexPath.row]
         navigationController?.pushViewController(vc, animated: true)
