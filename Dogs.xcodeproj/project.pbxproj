@@ -17,6 +17,7 @@
 		D98A517322361137008FABE3 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98A517222361137008FABE3 /* ActivityIndicator.swift */; };
 		D98A517722365131008FABE3 /* BreedListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98A517622365131008FABE3 /* BreedListViewController.swift */; };
 		D98A5179223664C9008FABE3 /* UIViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98A5178223664C9008FABE3 /* UIViewController+Rx.swift */; };
+		D98A517D2237904D008FABE3 /* Observable+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98A517C2237904D008FABE3 /* Observable+Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		D98A517222361137008FABE3 /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		D98A517622365131008FABE3 /* BreedListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreedListViewController.swift; sourceTree = "<group>"; };
 		D98A5178223664C9008FABE3 /* UIViewController+Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx.swift"; sourceTree = "<group>"; };
+		D98A517C2237904D008FABE3 /* Observable+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 				D98A51672235AD05008FABE3 /* APIManager.swift */,
 				D98A517222361137008FABE3 /* ActivityIndicator.swift */,
 				D98A5178223664C9008FABE3 /* UIViewController+Rx.swift */,
+				D98A517C2237904D008FABE3 /* Observable+Ext.swift */,
 				D98A51692235AE9C008FABE3 /* Supporting files */,
 			);
 			path = Dogs;
@@ -241,6 +244,7 @@
 				D98A51582235A940008FABE3 /* ImageViewController.swift in Sources */,
 				D98A517722365131008FABE3 /* BreedListViewController.swift in Sources */,
 				D98A5179223664C9008FABE3 /* UIViewController+Rx.swift in Sources */,
+				D98A517D2237904D008FABE3 /* Observable+Ext.swift in Sources */,
 				D98A51562235A940008FABE3 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

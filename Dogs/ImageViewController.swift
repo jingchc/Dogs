@@ -13,14 +13,20 @@ import RxOptional
 
 class ImageViewController: UIViewController {
     
-    var breed: String = ""
-
+    private var breed: String = ""
+    
     @IBOutlet weak var dogImage: UIImageView!
     @IBOutlet weak var breedName: UILabel!
     @IBOutlet weak var change: UIButton!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
     private let bag = DisposeBag()
+    
+    class func `init`(_ breed: String) -> ImageViewController {
+        let imageVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ImageViewController") as! ImageViewController
+        imageVC.breed = breed
+        return imageVC
+    }
     
     
     override func viewDidLoad() {
@@ -35,10 +41,8 @@ class ImageViewController: UIViewController {
 
         let activeIndicator = ActivityIndicator()
 
-
+        let viewWillAppear = rx.viewWillAppear.mapToVoid() //.map { _ in () }
         // API
-        let viewWillAppear = rx.viewWillAppear.filter { $0 }.map { _ in () }
-        
         Observable.merge(change.rx.tap.asObservable(), viewWillAppear)
             .flatMapLatest { [unowned self] in
                 APIManager.share
@@ -54,6 +58,7 @@ class ImageViewController: UIViewController {
             .bind(to: dogImage.rx.image)
             .disposed(by: bag)
         
+        // loading indicator
         activeIndicator.asObservable()
             .bind(to: loadingIndicator.rx.isAnimating)
             .disposed(by: bag)
