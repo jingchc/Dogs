@@ -6,4 +6,6 @@ A Demo for RxSwift Study Group
 Branch 說明：
 * master: starter
 * APIManager: APIManager 改寫後
+* UITableView: 新增頁面
+* UITableView: 新增頁面用 Rx 改寫後
 
